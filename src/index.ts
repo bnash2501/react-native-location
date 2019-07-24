@@ -6,7 +6,8 @@ import {
   Location,
   Heading,
   RNLocationNativeInterface,
-  GetLatestLocationOptions
+  GetLatestLocationOptions,
+  LocationServicesStatus
 } from "./types";
 import NativeInterface from "./lib/nativeInterface";
 import Subscriptions from "./lib/subscriptions";
@@ -97,6 +98,17 @@ export const requestPermission = (
  */
 export const getCurrentPermission = (): Promise<LocationPermissionStatus> => {
   return permissions.getCurrentPermission();
+};
+
+/**
+ * Gets the current location services status.
+ *
+ * @returns {Promise<LocationServicesStatus>} The current status of location services
+ */
+export const getLocationServicesStatus = (): Promise<
+  LocationServicesStatus
+> => {
+  return permissions.getLocationServicesStatus();
 };
 
 /**
