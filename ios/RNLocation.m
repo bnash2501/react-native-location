@@ -114,54 +114,11 @@ RCT_REMAP_METHOD(getAuthorizationStatus,
     resolve(status);
 }
 
-RCT_EXPORT_METHOD(getStatus:(RCTResponseSenderBlock)callback){
-  callback(@[ [self getLocationStatus] ]);
-}
-
 RCT_REMAP_METHOD(getStatus, getStatusWithResolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
-  NSNumber *status = [self getLocationStatus];
-  if(status >= 0){
+    NSNumber *status = [self getLocationStatus];
+    BOOL isEnabled = [status boolValue];
     resolve(status);
-  } else {
-    NSString *errorStrCode = [NSString stringWithFormat:@"%@", status];
-    NSString *errorStr = @"UNKNOWN_STATUS";
-    //NSError *error = [[NSError alloc] initWithDomain:errorStr code:0 userInfo:nil];
-    reject(errorStrCode, errorStr, nil);
-  }
 }
-
-//RCT_EXPORT_METHOD(getLocationServiceStatus:(RCTResponseSenderBlock)callback){
-//    callback(@[ [self locationServicesEnabled] ]);
-//}
-//
-//RCT_REMAP_METHOD(locationServicesEnabled, getLocationServiceStatusWithResolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
-//    NSNumber *locationStatus = [self getLocationStatus:[CLLocationManager locationServicesEnabled]];
-//
-//    if(locationStatus >= 0){
-//        resolve(locationStatus);
-//    }else{
-//        NSString *errorStrCode = [NSString stringWithFormat:@"%@", locationStatus];
-//        NSString *errorStr = @"UNKNOWN";
-//        reject(errorStrCode, errorStr, nil);
-//    }
-//}
-
-// RCT_REMAP_METHOD(getLocationServicesStatus,
-//                  hasLocationServicesEnabledWithResolver:(RCTPromiseResolveBlock)resolve
-//                  rejector:(RCTPromiseRejectBlock)reject)
-// {
-//   _Bool status = [CLLocationManager locationServicesEnabled];
-
-//   if (status) {
-//     resolve(@(TRUE));
-//   } else {
-//     resolve(@(FALSE));
-//   }
-//   // NString *status = [self hasLocationServicesEnabled:[CLLocationManager authorizationStatus]];
-//   // resolve(status);
-// }
-
-//RCT_REMAP_METHOD(get)
 
 #pragma mark - Configure
 
@@ -278,11 +235,6 @@ RCT_EXPORT_METHOD(stopUpdatingHeading)
     [self.locationManager stopUpdatingHeading];
 }
 
-// RCT_EXPORT_METHOD(hasLocationServicesEnabled)
-// {
-//     [self.locationManager hasLocationServicesEnabled]
-// }
-
 #pragma mark - CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
@@ -377,7 +329,9 @@ RCT_EXPORT_METHOD(stopUpdatingHeading)
 }
 
 -(NSNumber*)getLocationStatus {
-  return [NSNumber numberWithInt:[CLLocationManager authorizationStatus]];
+    NSNumber *status = [NSNumber numberWithInt:[CLLocationManager locationServicesEnabled]];
+    return status;
 }
 
 @end
+

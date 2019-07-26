@@ -10,8 +10,6 @@ export type LocationPermissionStatus =
   | "restricted"
   | "notDetermined";
 
-export type LocationServicesStatus = "UNKNOWN_STATUS" | "enabled" | "disabled";
-
 /**
  * Constants indicating the type of activity associated with location updates.
  * @platform ios

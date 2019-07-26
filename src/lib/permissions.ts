@@ -3,8 +3,7 @@ import {
   LocationPermissionStatus,
   Subscription,
   RNLocationNativeInterface,
-  RequestPermissionOptions,
-  LocationServicesStatus
+  RequestPermissionOptions
 } from "../types";
 
 /**
@@ -133,19 +132,18 @@ export default class Permissions {
     }
   }
 
-  public async getLocationServicesStatus(): Promise<LocationServicesStatus> {
+  public async getLocationServicesStatus(): Promise<boolean | string> {
     switch (Platform.OS) {
       // iOS Permissions
       case "ios": {
-        // if (!options.ios) {
-        // return false;
-        // }
         const locationStatus = await this.nativeInterface.getStatus();
+        // console.log("XXX location status is ", locationStatus);
         return locationStatus;
       }
 
       // Unsupported
       default:
+        // return true;
         return "UNKNOWN_STATUS";
     }
   }
