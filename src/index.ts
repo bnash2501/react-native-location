@@ -227,6 +227,7 @@ export default {
   getLatestLocation,
   subscribeToHeadingUpdates,
   subscribeToSignificantLocationUpdates,
+  getLocationServicesStatus,
   // Internal use only
   _configureHelpers,
   _nativeInterface: nativeInterface,
